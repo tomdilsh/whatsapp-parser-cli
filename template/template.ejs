@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>Whatsapp Chat Output</title>
+        <meta name='viewport', content='width=device-width, initial-scale=1'/>
+        <link rel='stylesheet', href='style.css'/>
+    </head>
+    <body>
+        <% for(var i =0; i < messages.length; i++) { %>
+        <div>
+            <div><%= messages[i].date %></div>
+            <div><%= messages[i].sender %></div>
+            <% for(var j =0; j < messages[i].lines.length; j++) { -%>
+                <% if (messages[i].lines[j].type == 'TEXT') { -%>
+                    <div><%- messages[i].lines[j].content %></div>
+                <% } else if (messages[i].lines[j].type == 'IMAGE') { -%>
+                    <img src='<%= messages[i].lines[j].content%>'>
+                <% } else if (messages[i].lines[j].type == 'VIDEO') { -%>
+                    <video src='<%= messages[i].lines[j].content%>'>
+                <% } else if (messages[i].lines[j].type == 'AUDIO') { -%>
+                    <audio src='<%= messages[i].lines[j].content%>'>
+                <% } else if (messages[i].lines[j].type == 'ATTACHMENT') { -%>
+                    <div>ATTACHMENT</div>
+                <% } -%> 
+            <% } -%>
+        </div>
+        <br/>
+        <% } -%>
+    </body>
+</html>

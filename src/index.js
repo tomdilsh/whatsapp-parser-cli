@@ -11,6 +11,7 @@ import { processMsgAndroid } from "./android.js";
 import { processMsgIOS } from "./ios.js";
 
 async function processFile(input_path, output_path) {
+  const outbox = process.argv[2];
   let processFn = null;
   const messages = [];
 
@@ -33,7 +34,10 @@ async function processFile(input_path, output_path) {
 
       const message = processFn(line);
       if (message?.date) {
-        messages.push(message); 
+        messages.push(message);
+        if (message.sender === outbox) {
+          message.outbox = true;
+        }
       } else {
         const last = messages.at(-1);
         last.lines.push(...message.lines);
